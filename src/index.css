@@ -20,7 +20,7 @@
   --electric-deep: #071525;
 
   /* lighthouse beam */
-  --beam-intensity: .17;   /* brightness of beam */
+  --beam-intensity: .15;   /* brightness of beam */
   --beam-feather: 50px;     /* edge softness */
   --beam-width: 10deg;      /* angular width */
   --beam-speed: .05s;        /* rotation duration */
