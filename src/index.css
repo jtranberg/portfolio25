@@ -413,3 +413,35 @@ body {
     animation: beamRotate var(--beam-speed) linear infinite !important;
   }
 }
+
+.modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; z-index:1000; }
+.modal { max-width:800px; width:90vw; max-height:85vh; overflow:auto; background:rgba(20,20,28,.96); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:16px; }
+.modal-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+.modal-title { margin:0; }
+.muted { opacity:.8; }
+.error { color:#ff7070; }
+.markdown :is(h1,h2,h3) { margin: .75em 0 .4em; }
+.markdown p { line-height:1.6; }
+.markdown pre { padding:12px; border-radius:10px; background:rgba(255,255,255,.06); overflow:auto; }
+.blog-grid .post-meta {
+  font-size: 12px;
+  opacity: .8;
+  margin-bottom: 6px;
+}
+
+.muted { opacity: .8; }
+.error { color: #ff7a7a; }
+
+.card-v3 {
+   padding: 1.25rem; /* ~20px */
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+}
+html[data-theme="dark"] .card-v3 {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+html[data-theme="light"] .card-v3 {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}

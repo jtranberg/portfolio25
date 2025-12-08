@@ -1,0 +1,98 @@
+[
+  {
+    "id": "2025-12-07-flow-founders-ai-portfolio",
+    "title": "Tightening the Flow: Founder → App Intelligence → Portfolio → LinkedIn",
+    "slug": "tightening-the-flow-founder-to-ai-to-portfolio",
+    "date": "2025-12-07T18:10:00-08:00",
+    "tags": ["portfolio", "branding", "ux", "links"],
+    "excerpt": "We wired a clean path from the Founder hub to App Intelligence to the Portfolio and out to LinkedIn. Four clicks, zero friction.",
+    "coverImage": "/blog/covers/flow-founders-ai.png",
+    "readingMinutes": 3,
+    "featured": true,
+    "content": "# Why the flow matters\nWhen people discover you, they shouldn't have to guess where to go next. Today we tightened the complete path:\n\n1. **Founder Hub** (jaytranberg.com) → positioning and quick proof.\n2. **App Intelligence** → what we build and how we ship.\n3. **Portfolio** → hard evidence: metrics, projects, downloads.\n4. **LinkedIn** → social proof + contact.\n\n## What changed\n- Consistent **CTA language** and button order across pages.\n- Matching **metrics strips** (30+ shipped projects, 6 categories, CI/CD).\n- Footer links standardized, including **Founder: JayTranberg.com**.\n\n## Result\nLess friction, more signal. Visitors get the story in seconds, and every route ends in a contact surface."
+  },
+  {
+    "id": "2025-12-07-dark-mode-wars",
+    "title": "Dark Mode Wars: One Toggle, Three Lessons",
+    "slug": "dark-mode-wars-toggle-lessons",
+    "date": "2025-12-07T17:32:00-08:00",
+    "tags": ["frontend", "react", "ux", "theming"],
+    "excerpt": "A small toggle surfaced a big truth: theme state must drive the DOM the same way your CSS expects.",
+    "coverImage": "/blog/covers/dark-mode.png",
+    "readingMinutes": 4,
+    "featured": false,
+    "content": "We chased a slippery bug: the dark/light toggle stopped working. The CSS was keying off `body.animated-theme`, but the hook was writing to `data-theme`.\n\n## Fix\n```js\nuseLayoutEffect(() => {\n  document.body.classList.toggle(\"animated-theme\", darkMode);\n  document.documentElement.setAttribute(\"data-theme\", darkMode ? \"dark\" : \"light\");\n}, [darkMode]);\n```\n\n## Lessons\n- **Contract first**: Align JS selectors with CSS expectations.\n- **No FOUC**: Use `useLayoutEffect` to apply theme before paint.\n- **Sane defaults**: Default to dark when no preference is stored.\n\nTiny change, huge UX win."
+  },
+  {
+    "id": "2025-12-06-portfolio-refresh",
+    "title": "Portfolio Refresh: Metrics-First + Resume & Appendix Downloads",
+    "slug": "portfolio-refresh-metrics-first",
+    "date": "2025-12-06T22:05:00-08:00",
+    "tags": ["portfolio", "ux", "writing"],
+    "excerpt": "Lead with evidence. We elevated the metrics strip and added one-click downloads for Resume and Project Appendix.",
+    "coverImage": "/blog/covers/portfolio-refresh.png",
+    "readingMinutes": 3,
+    "featured": true,
+    "content": "## What shipped\n- A bold, **metrics-first hero** (results at the top, not buried below).\n- **Download Resume** and **Project Appendix** buttons wired to `/public` assets.\n- Consistent link set: Resume, Appendix, LinkedIn.\n\n## Why\nRecruiters skim. Investors skim. Leading with metrics and giving a fast path to PDFs respects their time and increases replies."
+  },
+  {
+    "id": "2025-12-07-app-intelligence-sync",
+    "title": "App Intelligence Sync: Descriptions & KPIs Now Match the Portfolio",
+    "slug": "app-intelligence-sync-kpis",
+    "date": "2025-12-07T19:00:00-08:00",
+    "tags": ["branding", "content", "consistency"],
+    "excerpt": "We brought App Intelligence copy and KPIs in line with the portfolio: fewer gaps, tighter story.",
+    "coverImage": "/blog/covers/ai-sync.png",
+    "readingMinutes": 2,
+    "featured": false,
+    "content": "We aligned product blurbs and KPIs across the AI studio site and the portfolio:\n\n- **Dr. Epidermis / SkinScan**: `3+8 cls`, `80.2%` 8-class validation, Top-3 breakdown.\n- **Covercraft**: Lyrics + Predict, FAL + DeepAI upscaler, T2V pipeline.\n- **Snowman**: TRL-5→6, ESP32-S3, DS18B20 sensor array.\n\nCopy now reads the same everywhere. Less doubt, more trust."
+  },
+  {
+    "id": "2025-12-07-blog-goes-live",
+    "title": "Blog Goes Live: JSON → Markdown → Modal",
+    "slug": "blog-goes-live-json-md",
+    "date": "2025-12-07T20:05:00-08:00",
+    "tags": ["content", "react", "md"],
+    "excerpt": "A lightweight blog system using JSON posts, Markdown content, and a modal reader powered by Marked.",
+    "coverImage": "/blog/covers/blog-json-md.png",
+    "readingMinutes": 4,
+    "featured": false,
+    "content": "## Stack\n- **Data**: `posts.json` with `{ id, title, slug, date, tags, excerpt, content }`.\n- **Render**: `BlogIndex` + `BlogPostModal`.\n- **Parser**: `marked` for Markdown → HTML.\n\n## Why this design\n- Dead simple to version and diff in Git.\n- Easy to surface on the homepage.\n- Zero CMS overhead, instant edits."
+  },
+  {
+    "id": "2025-12-06-covercraft-kpis",
+    "title": "Covercraft Update: KPI Cards + Predictive Mode",
+    "slug": "covercraft-update-kpis",
+    "date": "2025-12-06T15:40:00-08:00",
+    "tags": ["music", "ai", "product"],
+    "excerpt": "We clarified the two core modes and highlighted the upscaling/transcription pipeline.",
+    "coverImage": "/blog/covers/covercraft.png",
+    "readingMinutes": 3,
+    "featured": false,
+    "content": "- **Dual modes**: Generate Lyrics + Predict continuation with rhyme structure.\n- **Imaging**: FAL generation → DeepAI upscale pass.\n- **Transcribe**: Sheet-music transcription surfaced in the catalog.\n\nThe catalog now tells the story in one glance."
+  },
+  {
+    "id": "2025-12-06-snowman-note",
+    "title": "Snowman Note: ESP32-S3 Progress and the TRL-5→6 Path",
+    "slug": "snowman-trl5-to-trl6",
+    "date": "2025-12-06T12:10:00-08:00",
+    "tags": ["iot", "hardware", "snowman"],
+    "excerpt": "Steady progress on hardware and telemetry as we push from TRL-5 toward TRL-6.",
+    "coverImage": "/blog/covers/snowman.png",
+    "readingMinutes": 4,
+    "featured": false,
+    "content": "## Recent progress\n- **ESP32-S3** firmware stable on displays + sensors.\n- **DS18B20** array (×5) logging cleanly.\n- Dashboard styling aligned with portfolio look.\n\n## Next\n- Expand environmental logs, connect upstream to analytics, and prep field readiness."
+  },
+  {
+    "id": "2025-12-05-cicd-notes",
+    "title": "Shipping Discipline: Netlify + Render, Minimal Friction",
+    "slug": "shipping-discipline-netlify-render",
+    "date": "2025-12-05T16:25:00-08:00",
+    "tags": ["devops", "cicd", "process"],
+    "excerpt": "A simple deployment footprint keeps feature work moving: Netlify (frontends) + Render (backends).",
+    "coverImage": "/blog/covers/cicd.png",
+    "readingMinutes": 3,
+    "featured": false,
+    "content": "## Why this setup\n- **Fast previews** for frontends.\n- **Low-ceremony** deploys for microservices.\n- Good enough observability to catch regressions.\n\nKeep infra boring so product can be exciting."
+  }
+]

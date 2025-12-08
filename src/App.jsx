@@ -12,6 +12,9 @@ import headline from "./data/headlineMetrics";
 import allProjects from "./data/projects";
 import skillsGroups from "./data/skills";
 
+import BlogIndex from "./components/BlogIndex.jsx";
+import BlogPostModal from "./components/BlogPostModal.jsx";
+
 /* ---------- Theme (persisted) + smooth anchor scroll ---------- */
 function useDarkMode(defaultOn = true) {
   const systemDark =
@@ -65,6 +68,7 @@ function Section({ id, title, subtitle, children }) {
 }
 
 export default function App() {
+  const [openPost, setOpenPost] = useState(null);
   const [dark, setDark] = useDarkMode(true);
   useRevealOnScroll(".reveal");
 
@@ -77,7 +81,6 @@ export default function App() {
 
   return (
     <div className="page page-electric force-motion">
-
       {/* ---------- Topbar ---------- */}
       <header className="topbar">
         <Container>
@@ -196,6 +199,14 @@ export default function App() {
         <div className="reveal fade-up">
           <SkillsMatrix groups={skillsGroups} />
         </div>
+      </Section>
+      <Section
+        id="blog"
+        title="Blog"
+        subtitle="Build logs, experiments, postmortems."
+      >
+        <BlogIndex onOpen={setOpenPost} />
+        <BlogPostModal post={openPost} onClose={() => setOpenPost(null)} />
       </Section>
 
       {/* ---------- Contact ---------- */}
