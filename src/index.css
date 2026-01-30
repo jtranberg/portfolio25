@@ -445,3 +445,87 @@ html[data-theme="dark"] .card-v3 {
 html[data-theme="light"] .card-v3 {
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
+
+
+/* =========================================
+   GRID — make cards smaller by packing more columns
+   (put at bottom)
+   ========================================= */
+
+/* Replace the fixed 1/2/3 column setup with auto-fit tiles */
+.grid {
+  display: grid;
+  gap: 12px; /* smaller spacing between cards */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* If you want them even tighter on large screens */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+.card-body { padding: 12px; }
+.card-title { font-size: 16px; }
+.card-desc { font-size: 13px; margin-top: 6px; }
+.kpi-list { gap: 6px; margin-top: 8px; }
+
+
+/* Make ProjectCardV2 tiles physically smaller */
+.card.card-v2 {
+  max-width: 320px;      /* try 300–360 */
+  justify-self: start;   /* if parent is grid */
+}
+
+/* Center the smaller cards inside each row */
+.grid,
+.grid2 {
+  justify-items: center; /* if these are the parents */
+}
+.card.card-v2 .card-body { padding: 12px 12px 14px; }
+.card.card-v2 { border-radius: 14px; }
+
+
+/* If cards are inside a flex wrap container */
+.cards,
+.projects,
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.card.card-v2 {
+  flex: 0 0 320px; /* fixed tile size */
+}
+/* Work cards: flex row + tight spacing */
+.grid2 {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Control tile width (this is what makes them "smaller") */
+.grid2 > .reveal {
+  flex: 0 0 300px;
+  max-width: 300px;
+}
+
+/* Pills wrap instead of horizontal scroll */
+.filters {
+  display: flex;
+  flex-wrap: wrap;          /* ✅ wrap to new line */
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow: visible;        /* ✅ stop scroll container behavior */
+}
+
+/* Optional: slightly tighter chips so more fit per row */
+.chip {
+  padding: 6px 10px;
+  white-space: nowrap;      /* keeps each pill on one line */
+}

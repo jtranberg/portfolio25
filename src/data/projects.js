@@ -1,10 +1,11 @@
 import LINKS from "../config/links";
+import apps from "./apps"; // ✅ adjust path if your apps.js is elsewhere
+import appsToProjects from "./appsToProjects";
 
 // Helper to resolve images from src/assets/screens
-const img = (file) =>
-  new URL(`../assets/screens/${file}`, import.meta.url).href;
+const img = (file) => new URL(`../assets/screens/${file}`, import.meta.url).href;
 
-export default [
+const portfolioProjects = [
   {
     area: "AI",
     title: "Covercraft - AI Artist Branding",
@@ -40,8 +41,7 @@ export default [
     links: [{ href: LINKS.inAndOut, label: "Visit" }],
     details: {
       problem: "Items were repeatedly lost across busy teams with no visibility.",
-      action:
-        "Built a multi-tenant SaaS with role-based tracking and histories.",
+      action: "Built a multi-tenant SaaS with role-based tracking and histories.",
       result: "Lowered losses and cut recurring admin time each week.",
     },
   },
@@ -78,10 +78,8 @@ export default [
     links: [],
     details: {
       problem: "Creating era-correct visuals is slow and research heavy.",
-      action:
-        "Added era presets and strict constraints with an upscaling pipeline.",
-      result:
-        "High-quality results in minutes with reliable period accuracy.",
+      action: "Added era presets and strict constraints with an upscaling pipeline.",
+      result: "High-quality results in minutes with reliable period accuracy.",
     },
   },
 
@@ -119,8 +117,7 @@ export default [
     links: [],
     details: {
       problem: "Low engagement and heavy manual status work.",
-      action:
-        "Introduced XP, badges, automated messaging and parts flows.",
+      action: "Introduced XP, badges, automated messaging and parts flows.",
       result: "Happier teams and faster service communication.",
     },
   },
@@ -129,7 +126,8 @@ export default [
     area: "Mobile",
     title: "Soundscapes and Chill",
     image: img("soundscapes.png"),
-    summary: "Multi-track ambient engine with adjustable layers and seamless loops.",
+    summary:
+      "Multi-track ambient engine with adjustable layers and seamless loops.",
     kpis: [
       { value: 300, unit: "percent", sign: "plus", label: "session length" },
       { value: 30, unit: "percent", sign: "minus", label: "battery usage" },
@@ -138,10 +136,8 @@ export default [
     links: [{ href: LINKS.soundscapes, label: "Google Play" }],
     details: {
       problem: "Static audio apps do not retain users or fit personal preferences.",
-      action:
-        "Built a layered engine with preloaded buffers and persistent settings.",
-      result:
-        "Longer sessions, smoother loops, and stable mobile performance.",
+      action: "Built a layered engine with preloaded buffers and persistent settings.",
+      result: "Longer sessions, smoother loops, and stable mobile performance.",
     },
   },
 
@@ -189,21 +185,33 @@ export default [
     summary:
       "Custom EntryPoint and modular validation; Ethers.js front end on Sepolia.",
     kpis: [
-      {
-        value: null,
-        unit: null,
-        sign: null,
-        label: "Gas-aware contract patterns, clean UserOperation flows",
-      },
+      { value: null, unit: null, sign: null, label: "Gas-aware contract patterns, clean UserOperation flows" },
     ],
     tags: ["Solidity", "Ethers.js", "Web3"],
     links: [],
     details: {
       problem: "Complicated onboarding and brittle wallet flows.",
-      action:
-        "Built modular validation and a clean testing pipeline on Sepolia.",
-      result:
-        "Faster dapp testing and better UX for user operations.",
+      action: "Built modular validation and a clean testing pipeline on Sepolia.",
+      result: "Faster dapp testing and better UX for user operations.",
     },
   },
 ];
+
+// ✅ convert App Intelligence catalog → portfolio format
+const appIntelligenceProjects = appsToProjects(apps);
+
+// ✅ de-dupe by title (prevents doubles like ProProBets)
+const merged = (() => {
+  const seen = new Set(portfolioProjects.map((p) => p.title.trim().toLowerCase()));
+  return [
+    ...portfolioProjects,
+    ...appIntelligenceProjects.filter((p) => {
+      const key = p.title.trim().toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }),
+  ];
+})();
+
+export default merged;

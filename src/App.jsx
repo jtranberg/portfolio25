@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// App.jsx
+import { useEffect, useMemo, useState } from "react";
 import ChatbotOverlay from "./components/chatbotOverlay.jsx";
 import MetricStat from "./components/MetricStat.jsx";
 import KPIFilter from "./components/KPIFilter.jsx";
@@ -7,9 +8,12 @@ import SkillsMatrix from "./components/SkillsMatrix.jsx";
 import useRevealOnScroll from "./hooks/useRevealOnScroll.js";
 import "./index.css";
 
+
+
 import LINKS from "./config/links";
 import headline from "./data/headlineMetrics";
-import allProjects from "./data/projects";
+import allProjects from "./data/allProjects";
+
 import skillsGroups from "./data/skills";
 
 import BlogIndex from "./components/BlogIndex.jsx";
@@ -23,8 +27,10 @@ function useDarkMode(defaultOn = true) {
 
   const stored =
     typeof window !== "undefined" ? localStorage.getItem("darkMode") : null;
+
   const initial =
     stored === "true" || (stored === null && (defaultOn || systemDark));
+
   const [dark, setDark] = useState(initial);
 
   useEffect(() => {
@@ -36,14 +42,16 @@ function useDarkMode(defaultOn = true) {
     const onClick = (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
+
       const id = a.getAttribute("href").slice(1);
       const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", `#${id}`);
-      }
+      if (!el) return;
+
+      e.preventDefault();
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${id}`);
     };
+
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, []);
@@ -55,6 +63,7 @@ function useDarkMode(defaultOn = true) {
 function Container({ children }) {
   return <div className="container">{children}</div>;
 }
+
 function Section({ id, title, subtitle, children }) {
   return (
     <section id={id} className="section">
@@ -72,12 +81,32 @@ export default function App() {
   const [dark, setDark] = useDarkMode(true);
   useRevealOnScroll(".reveal");
 
+  // ✅ RESTORE filter state
   const [filter, setFilter] = useState("All");
-  const filters = ["All", "AI", "IoT", "SaaS", "Mobile", "Web3"];
+
+  // ✅ Choose what field powers pills (category first, then area)
+  const getFilterKey = (p) => String(p.category || p.area || "Other").trim();
+
+  // ✅ What label to show on the card pill (area first, fallback to category)
+  const getAreaLabel = (p) => String(p.area || p.category || "Other").trim();
+
+  // ✅ Build pills from real data
+  const filters = useMemo(() => {
+    const set = new Set(allProjects.map(getFilterKey));
+    const list = Array.from(set).filter(Boolean).sort();
+    const out = ["All", ...list];
+
+    // Debug: tells you if you truly have many categories
+    console.log("FILTERS:", out.length, out);
+
+    return out;
+  }, []);
+
+  // ✅ Filter visible projects
   const visible =
     filter === "All"
       ? allProjects
-      : allProjects.filter((p) => p.area === filter);
+      : allProjects.filter((p) => getFilterKey(p) === filter);
 
   return (
     <div className="page page-electric force-motion">
@@ -95,6 +124,7 @@ export default function App() {
               <a href="#stack">Stack</a>
               <a href="#contact">Contact</a>
             </nav>
+
             <div className="topbar-cta">
               <button
                 className="btn"
@@ -104,6 +134,7 @@ export default function App() {
               >
                 {dark ? "☀️" : "🌙"}
               </button>
+
               <a
                 href={LINKS.linkedin}
                 target="_blank"
@@ -117,18 +148,20 @@ export default function App() {
         </Container>
       </header>
 
-      {/* ---------- Hero (metrics-first) ---------- */}
+      {/* ---------- Hero ---------- */}
       <section id="home" className="hero hero-results">
         <div className="hero-bg" />
         <Container>
           <div className="hero-inner">
-            <p className="kicker">Founder - Full-Stack and IoT - AI - Web3</p>
-            <h1 className="hero-title">
-              I build measurable software and systems.
-            </h1>
+            <p className="kicker">
+              Team Lead · Full-Stack Engineer · IoT · AI · Web3
+            </p>
+
+            <h1 className="hero-title">I lead and ship end-to-end software.</h1>
+
             <p className="hero-subtitle">
-              End-to-end products across firmware, backends, ML, SaaS, mobile,
-              and Web3. Results first, always.
+              Team lead delivery across firmware, backends, ML, SaaS, mobile, and
+              Web3 — focused on reliability, UX, and outcomes.
             </p>
 
             <div className="metrics-grid">
@@ -138,14 +171,7 @@ export default function App() {
                   className="reveal fade-up"
                   style={{ transitionDelay: `${i * 90}ms` }}
                 >
-                  {/* MetricStat should format {sign, value, unit} */}
-                  <MetricStat
-                    label={m.label}
-                    value={m.value}
-                    unit={m.unit}
-                    sign={m.sign}
-                    caption={m.caption}
-                  />
+                  <MetricStat {...m} />
                 </div>
               ))}
             </div>
@@ -170,27 +196,28 @@ export default function App() {
         </Container>
       </section>
 
-      {/* ---------- Work (filterable) ---------- */}
+      {/* ---------- Work ---------- */}
       <Section
         id="featured"
         title="Work"
         subtitle="Filter by focus area and open any project for details."
       >
         <KPIFilter active={filter} onChange={setFilter} options={filters} />
+
         <div className="grid2">
           {visible.map((p, i) => (
             <div
-              key={p.title}
+              key={p.id || p.title}
               className="reveal fade-up"
               style={{ transitionDelay: `${i * 60}ms` }}
             >
-              <ProjectCardV2 {...p} />
+              <ProjectCardV2 {...p} area={getAreaLabel(p)} />
             </div>
           ))}
         </div>
       </Section>
 
-      {/* ---------- Skills Matrix ---------- */}
+      {/* ---------- Skills ---------- */}
       <Section
         id="stack"
         title="Skills Matrix"
@@ -200,11 +227,9 @@ export default function App() {
           <SkillsMatrix groups={skillsGroups} />
         </div>
       </Section>
-      <Section
-        id="blog"
-        title="Blog"
-        subtitle="Build logs, experiments, postmortems."
-      >
+
+      {/* ---------- Blog ---------- */}
+      <Section id="blog" title="Blog" subtitle="Build logs, experiments, postmortems.">
         <BlogIndex onOpen={setOpenPost} />
         <BlogPostModal post={openPost} onClose={() => setOpenPost(null)} />
       </Section>
@@ -213,7 +238,7 @@ export default function App() {
       <Section
         id="contact"
         title="Contact"
-        subtitle="Reach out for roles, collabs, or product builds."
+        subtitle="Open to full-time roles and long-term contract engagements."
       >
         <div className="panel">
           <p>
@@ -228,19 +253,14 @@ export default function App() {
             </a>
             <br />
             LinkedIn:{" "}
-            <a
-              className="link"
-              href={LINKS.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="link" href={LINKS.linkedin} target="_blank" rel="noreferrer">
               /in/jaytranberg
             </a>
           </p>
         </div>
       </Section>
 
-      {/* ---------- Floating chatbot ---------- */}
+      {/* ---------- Chatbot ---------- */}
       <ChatbotOverlay />
     </div>
   );
