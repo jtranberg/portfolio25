@@ -21,21 +21,21 @@ const apps = [
   },
 
   // Creative & Media
-  {
-    id: "covercraft",
-    title: "Covercraft",
-    category: "Creative & Media",
-    tags: ["Music", "AI", "Next.js"],
-    description:
-      "AI music studio: lyrics, rhyme prediction, album-art upscaling, and sheet-music transcription.",
-    kpis: [
-      { value: "Lyrics+Predict", label: "Dual Modes" },
-      { value: "FAL+DeepAI", label: "Image/Upscale" },
-      { value: "T2V", label: "Task Pipeline" },
-    ],
-    // linkUrl: "https://covercraftspa.netlify.app/",
-    image: "/covercraft.png",
-  },
+  // {
+  //   id: "covercraft",
+  //   title: "Covercraft",
+  //   category: "Creative & Media",
+  //   tags: ["Music", "AI", "Next.js"],
+  //   description:
+  //     "AI music studio: lyrics, rhyme prediction, album-art upscaling, and sheet-music transcription.",
+  //   kpis: [
+  //     { value: "Lyrics+Predict", label: "Dual Modes" },
+  //     { value: "FAL+DeepAI", label: "Image/Upscale" },
+  //     { value: "T2V", label: "Task Pipeline" },
+  //   ],
+  //   // linkUrl: "https://covercraftspa.netlify.app/",
+  //   image: "/covercraft.png",
+  // },
 
   {
     id: "soundscapes-chill",
