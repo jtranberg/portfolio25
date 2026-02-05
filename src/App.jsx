@@ -157,7 +157,7 @@ export default function App() {
               Team Lead · Full-Stack Engineer · IoT · AI · Web3
             </p>
 
-            <h1 className="hero-title">I lead and ship end-to-end software.</h1>
+            <h1 className="hero-title">I lead, build and ship end-to-end software.</h1>
 
             <p className="hero-subtitle">
               Team lead delivery across firmware, backends, ML, SaaS, mobile, and
