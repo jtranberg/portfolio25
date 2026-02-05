@@ -1,16 +1,5 @@
 [
-  {
-    "id": "2025-12-07-flow-founders-ai-portfolio",
-    "title": "Tightening the Flow: Founder → App Intelligence → Portfolio → LinkedIn",
-    "slug": "tightening-the-flow-founder-to-ai-to-portfolio",
-    "date": "2025-12-07T18:10:00-08:00",
-    "tags": ["portfolio", "branding", "ux", "links"],
-    "excerpt": "We wired a clean path from the Founder hub to App Intelligence to the Portfolio and out to LinkedIn. Four clicks, zero friction.",
-    "coverImage": "/blog/covers/flow-founders-ai.png",
-    "readingMinutes": 3,
-    "featured": true,
-    "content": "# Why the flow matters\nWhen people discover you, they shouldn't have to guess where to go next. Today we tightened the complete path:\n\n1. **Founder Hub** (jaytranberg.com) → positioning and quick proof.\n2. **App Intelligence** → what we build and how we ship.\n3. **Portfolio** → hard evidence: metrics, projects, downloads.\n4. **LinkedIn** → social proof + contact.\n\n## What changed\n- Consistent **CTA language** and button order across pages.\n- Matching **metrics strips** (30+ shipped projects, 6 categories, CI/CD).\n- Footer links standardized, including **Founder: JayTranberg.com**.\n\n## Result\nLess friction, more signal. Visitors get the story in seconds, and every route ends in a contact surface."
-  },
+  
   {
     "id": "2025-12-07-dark-mode-wars",
     "title": "Dark Mode Wars: One Toggle, Three Lessons",
