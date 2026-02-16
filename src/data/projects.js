@@ -57,8 +57,7 @@ const portfolioProjects = [
   ],
   tags: ["Amazon Nova", "Agentic AI", "React", "Express", "MongoDB", "SaaS"],
   links: [
-    // { href: LINKS.anaSonic, label: "Live Demo" },
-  ],
+   ],
   details: {
     problem:
       "Property portfolios relied on manual syndication workflows with data inconsistencies, compliance risks, and no operational visibility.",
