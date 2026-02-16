@@ -45,6 +45,30 @@ const portfolioProjects = [
       result: "Lowered losses and cut recurring admin time each week.",
     },
   },
+  {
+  area: "SaaS + AI",
+  title: "A.N.A. Sonic Syndicator",
+  image: img("ana-sonic-syndicator.png"),
+  summary:
+    "AI operations console for property portfolios. Read-only CMS integration, automated syndication feeds, and agentic AI auditing powered by Amazon Nova.",
+  kpis: [
+    { value: 100, unit: "percent", sign: "plus", label: "read-only safety" },
+    { value: 1, unit: "click", sign: "minus", label: "manual syndication" },
+  ],
+  tags: ["Amazon Nova", "Agentic AI", "React", "Express", "MongoDB", "SaaS"],
+  links: [
+    // { href: LINKS.anaSonic, label: "Live Demo" },
+  ],
+  details: {
+    problem:
+      "Property portfolios relied on manual syndication workflows with data inconsistencies, compliance risks, and no operational visibility.",
+    action:
+      "Built a multi-tenant AI operations layer that normalizes CMS data, generates Apartments.com XML feeds, and uses agentic AI to detect issues and suggest improvements.",
+    result:
+      "Introduced automated quality auditing, explainable AI recommendations, and a scalable SaaS foundation for portfolio operations.",
+  },
+},
+
 
   {
     area: "AI",
