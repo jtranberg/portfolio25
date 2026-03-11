@@ -224,17 +224,23 @@ const portfolioProjects = [
 const appIntelligenceProjects = appsToProjects(apps);
 
 // ✅ de-dupe by title (prevents doubles like ProProBets)
-const merged = (() => {
-  const seen = new Set(portfolioProjects.map((p) => p.title.trim().toLowerCase()));
-  return [
-    ...portfolioProjects,
-    ...appIntelligenceProjects.filter((p) => {
-      const key = p.title.trim().toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    }),
-  ];
-})();
+const normalizeTitle = (title = "") =>
+  title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\.com/g, "")
+    .replace(/^the\s+/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .trim();
 
+const merged = (() => {
+  const seen = new Set();
+
+  return [...portfolioProjects, ...appIntelligenceProjects].filter((p) => {
+    const key = normalizeTitle(p.title);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+})();
 export default merged;
