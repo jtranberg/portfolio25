@@ -8,8 +8,6 @@ import SkillsMatrix from "./components/SkillsMatrix.jsx";
 import useRevealOnScroll from "./hooks/useRevealOnScroll.js";
 import "./index.css";
 
-
-
 import LINKS from "./config/links";
 import headline from "./data/headlineMetrics";
 import allProjects from "./data/allProjects";
@@ -81,32 +79,33 @@ export default function App() {
   const [dark, setDark] = useDarkMode(true);
   useRevealOnScroll(".reveal");
 
-  // ✅ RESTORE filter state
   const [filter, setFilter] = useState("All");
 
-  // ✅ Choose what field powers pills (category first, then area)
   const getFilterKey = (p) => String(p.category || p.area || "Other").trim();
-
-  // ✅ What label to show on the card pill (area first, fallback to category)
   const getAreaLabel = (p) => String(p.area || p.category || "Other").trim();
 
-  // ✅ Build pills from real data
   const filters = useMemo(() => {
     const set = new Set(allProjects.map(getFilterKey));
     const list = Array.from(set).filter(Boolean).sort();
-    const out = ["All", ...list];
-
-    // Debug: tells you if you truly have many categories
-    console.log("FILTERS:", out.length, out);
-
-    return out;
+    return ["All", ...list];
   }, []);
 
-  // ✅ Filter visible projects
   const visible =
     filter === "All"
       ? allProjects
       : allProjects.filter((p) => getFilterKey(p) === filter);
+
+  const groupedProjects = useMemo(() => {
+    const groups = {};
+
+    visible.forEach((p) => {
+      const key = getFilterKey(p);
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(p);
+    });
+
+    return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
+  }, [visible]);
 
   return (
     <div className="page page-electric force-motion">
@@ -157,11 +156,13 @@ export default function App() {
               Team Lead · Full-Stack Engineer · IoT · AI · Web3
             </p>
 
-            <h1 className="hero-title">I lead, build and ship end-to-end software.</h1>
+            <h1 className="hero-title">
+              I lead, build and ship end-to-end software.
+            </h1>
 
             <p className="hero-subtitle">
-              Team lead delivery across firmware, backends, ML, SaaS, mobile, and
-              Web3 — focused on reliability, UX, and outcomes.
+              Team lead delivery across firmware, backends, ML, SaaS, mobile,
+              and Web3 — focused on reliability, UX, and outcomes.
             </p>
 
             <div className="metrics-grid">
@@ -200,19 +201,37 @@ export default function App() {
       <Section
         id="featured"
         title="Work"
-        subtitle="Filter by focus area and open any project for details."
+        subtitle="Filter by focus area and open any project group for details."
       >
         <KPIFilter active={filter} onChange={setFilter} options={filters} />
 
-        <div className="grid2">
-          {visible.map((p, i) => (
-            <div
-              key={p.id || p.title}
-              className="reveal fade-up"
-              style={{ transitionDelay: `${i * 60}ms` }}
+        <div className="project-drawers">
+          {groupedProjects.map(([groupName, projects], groupIndex) => (
+            <details
+              key={groupName}
+              className="project-drawer reveal fade-up"
+              open={filter !== "All" || groupIndex === 0}
+              style={{ transitionDelay: `${groupIndex * 70}ms` }}
             >
-              <ProjectCardV2 {...p} area={getAreaLabel(p)} />
-            </div>
+              <summary className="project-drawer-summary">
+                <span className="project-drawer-title">{groupName}</span>
+                <span className="project-drawer-count">
+                  ({projects.length})
+                </span>
+              </summary>
+
+              <div className="grid2 drawer-grid">
+                {projects.map((p, i) => (
+                  <div
+                    key={p.id || p.title}
+                    className="reveal fade-up"
+                    style={{ transitionDelay: `${i * 50}ms` }}
+                  >
+                    <ProjectCardV2 {...p} area={getAreaLabel(p)} />
+                  </div>
+                ))}
+              </div>
+            </details>
           ))}
         </div>
       </Section>
@@ -229,7 +248,11 @@ export default function App() {
       </Section>
 
       {/* ---------- Blog ---------- */}
-      <Section id="blog" title="Blog" subtitle="Build logs, experiments, postmortems.">
+      <Section
+        id="blog"
+        title="Blog"
+        subtitle="Build logs, experiments, postmortems."
+      >
         <BlogIndex onOpen={setOpenPost} />
         <BlogPostModal post={openPost} onClose={() => setOpenPost(null)} />
       </Section>
@@ -253,7 +276,12 @@ export default function App() {
             </a>
             <br />
             LinkedIn:{" "}
-            <a className="link" href={LINKS.linkedin} target="_blank" rel="noreferrer">
+            <a
+              className="link"
+              href={LINKS.linkedin}
+              target="_blank"
+              rel="noreferrer"
+            >
               /in/jaytranberg
             </a>
           </p>
