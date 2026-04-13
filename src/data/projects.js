@@ -26,6 +26,30 @@ const portfolioProjects = [
         "Reduced turnaround from days to minutes while improving consistency across formats.",
     },
   },
+ {
+  area: "Environmental Intelligence",
+  title: "Be Brave Enough To Breathe - Atmospheric Intelligence",
+  image: img("beBraveEnoughToBreath.png"),
+  summary:
+    "Full-stack atmospheric intelligence platform unifying live weather, air quality, and global CO₂ into a single insight-driven dashboard.",
+  kpis: [
+    { value: 3, unit: "feeds", sign: "plus", label: "combined into one UI" },
+    { value: 1, unit: "hour", sign: "plus", label: "CO₂ cache layer" },
+  ],
+  tags: ["React", "Express", "Render", "Netlify", "OpenWeather", "NOAA"],
+  links: [
+    { label: "Live App", url: "https://be-brave-enough-to-breath.netlify.app/" },
+    { label: "Backend API", url: "https://be-brave-to-breath.onrender.com/api/global-co2" },
+  ],
+  details: {
+    problem:
+      "Critical environmental signals are spread across disconnected sources, making interpretation slower and less intuitive.",
+    action:
+      "Designed and deployed a full-stack system that merges weather and air-quality APIs with a custom NOAA CO₂ ingestion, parsing, and caching service.",
+    result:
+      "Delivered a live interface that transforms fragmented atmospheric data into a clear data → insight → action flow for real-time environmental awareness.",
+  },
+},
 
   {
     area: "SaaS",
