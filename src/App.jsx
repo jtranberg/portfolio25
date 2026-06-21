@@ -13,7 +13,7 @@ import "./index.css";
 import SyndicatorCaseStudy from "./components/SyndicatorCaseStudy.jsx";
 import Fan7CaseStudy from "./components/Fan7CaseStudy.jsx";
 import ProspectorCaseStudy from "./components/ProspectorCaseStudy.jsx";
-import TrustChainCaseStudy from "./components/trust.jsx";
+import TrustChainCaseStudy from "./components/TrustChainCaseStudy.jsx";
 
 import ProofCard from "./components/ProofCard.jsx";
 import {
