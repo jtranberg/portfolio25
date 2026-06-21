@@ -13,6 +13,7 @@ import "./index.css";
 import SyndicatorCaseStudy from "./components/SyndicatorCaseStudy.jsx";
 import Fan7CaseStudy from "./components/Fan7CaseStudy.jsx";
 import ProspectorCaseStudy from "./components/ProspectorCaseStudy.jsx";
+import TrustChainCaseStudy from "./components/TrustChainCaseStudy.jsx";
 
 import ProofCard from "./components/ProofCard.jsx";
 import {
@@ -405,6 +406,31 @@ export default function App() {
               Read Case Study
             </button>
           </article>
+          <article className="case-study-card reveal fade-up">
+            <p className="case-study-label">Web3 Engineering Platform</p>
+
+            <h3>TrustChain</h3>
+
+            <p>
+              A blockchain product family exploring digital trust, wallet-based
+              identity, smart contract agreements, and immutable verification
+              through Ethereum.
+            </p>
+
+            <ul>
+              <li>Universal Wallet</li>
+              <li>The Witness</li>
+              <li>The Contractual Agreement</li>
+            </ul>
+
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={() => setOpenCaseStudy("trustchain")}
+            >
+              Read Case Study
+            </button>
+          </article>
         </div>
       </Section>
 
@@ -529,6 +555,7 @@ export default function App() {
         {openCaseStudy === "syndicator" && <SyndicatorCaseStudy />}
         {openCaseStudy === "prospector" && <ProspectorCaseStudy />}
         {openCaseStudy === "fan7" && <Fan7CaseStudy />}
+        {openCaseStudy === "trustchain" && <TrustChainCaseStudy />}
       </CaseStudyModal>
       <ChatbotOverlay />
     </div>
