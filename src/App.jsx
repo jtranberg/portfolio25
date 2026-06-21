@@ -365,7 +365,7 @@ export default function App() {
             <p className="case-study-label">Data Intelligence Platform</p>
             <h3>The Prospector-A ScoutBoard</h3>
             <p>
-              Built a hockey prospect intelligence platform using React, Node,
+              Created a hockey prospect intelligence platform using React, Node,
               Express, MongoDB, API ingestion, scoring logic, search, filtering,
               and analytics dashboards.
             </p>
@@ -388,7 +388,7 @@ export default function App() {
             <p className="case-study-label">SaaS Operations Platform</p>
             <h3>Fan7 Magic Portal</h3>
             <p>
-              Built a repair-shop customer and operations portal integrating
+              Engineered a repair-shop customer and operations portal integrating
               authentication, customer claims, dashboards, technician metrics,
               and Shopmonkey-connected workflows.
             </p>
