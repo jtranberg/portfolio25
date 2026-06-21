@@ -773,3 +773,28 @@ background: #111827;
 .page-electric::after {
   z-index: -1;
 }
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.case-gallery figure {
+  margin: 0;
+}
+
+.case-gallery img {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.case-gallery figcaption {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}

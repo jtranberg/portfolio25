@@ -46,7 +46,7 @@ export default function TrustChainCaseStudy() {
 
         <figure>
           <img
-            src="/contractulAgreement.png"
+            src="/contractualAgreement.png"
             alt="The Contractual Agreement interface"
           />
           <figcaption>
