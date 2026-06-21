@@ -1,23 +1,36 @@
 // App.jsx
 import { useEffect, useMemo, useState } from "react";
 import ChatbotOverlay from "./components/chatbotOverlay.jsx";
-import MetricStat from "./components/MetricStat.jsx";
+// import MetricStat from "./components/MetricStat.jsx";
 import KPIFilter from "./components/KPIFilter.jsx";
 import ProjectCardV2 from "./components/ProjectCardV2.jsx";
 import SkillsMatrix from "./components/SkillsMatrix.jsx";
+import BlogIndex from "./components/BlogIndex.jsx";
+import BlogPostModal from "./components/BlogPostModal.jsx";
 import useRevealOnScroll from "./hooks/useRevealOnScroll.js";
 import "./index.css";
 
-import LINKS from "./config/links";
-import headline from "./data/headlineMetrics";
-import allProjects from "./data/allProjects";
+import SyndicatorCaseStudy from "./components/SyndicatorCaseStudy.jsx";
+import Fan7CaseStudy from "./components/Fan7CaseStudy.jsx";
+import ProspectorCaseStudy from "./components/ProspectorCaseStudy.jsx";
 
+import ProofCard from "./components/ProofCard.jsx";
+import {
+  Activity,
+  BrainCircuit,
+  Database,
+  Globe2,
+  Rocket,
+  ServerCog,
+  Menu,
+  X,
+} from "lucide-react";
+
+import LINKS from "./config/links";
+// import headline from "./data/headlineMetrics";
+import allProjects from "./data/allProjects";
 import skillsGroups from "./data/skills";
 
-import BlogIndex from "./components/BlogIndex.jsx";
-import BlogPostModal from "./components/BlogPostModal.jsx";
-
-/* ---------- Theme (persisted) + smooth anchor scroll ---------- */
 function useDarkMode(defaultOn = true) {
   const systemDark =
     typeof window !== "undefined" &&
@@ -57,7 +70,6 @@ function useDarkMode(defaultOn = true) {
   return [dark, setDark];
 }
 
-/* ---------- Tiny UI primitives ---------- */
 function Container({ children }) {
   return <div className="container">{children}</div>;
 }
@@ -74,62 +86,128 @@ function Section({ id, title, subtitle, children }) {
   );
 }
 
+function CommunicationCard({ icon, title, children }) {
+  return (
+    <article className="case-study-card reveal fade-up">
+      <p className="case-study-label">{icon}</p>
+      <h3>{title}</h3>
+      <p>{children}</p>
+    </article>
+  );
+}
+
+function CaseStudyModal({ open, children, onClose }) {
+  if (!open) return null;
+
+  return (
+    <div
+      className="modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="modal case-modal"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="modal-head">
+          <h3 className="modal-title">Engineering Case Study</h3>
+          <button className="btn" type="button" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [openPost, setOpenPost] = useState(null);
   const [dark, setDark] = useDarkMode(true);
+  const [filter, setFilter] = useState("All");
+  const [openCaseStudy, setOpenCaseStudy] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   useRevealOnScroll(".reveal");
 
-  const [filter, setFilter] = useState("All");
+  const getFilterKey = (project) =>
+    String(project.category || project.area || "Other").trim();
 
-  const getFilterKey = (p) => String(p.category || p.area || "Other").trim();
-  const getAreaLabel = (p) => String(p.area || p.category || "Other").trim();
+  const getAreaLabel = (project) =>
+    String(project.area || project.category || "Other").trim();
 
   const filters = useMemo(() => {
-    const set = new Set(allProjects.map(getFilterKey));
-    const list = Array.from(set).filter(Boolean).sort();
-    return ["All", ...list];
+    const uniqueFilters = new Set(allProjects.map(getFilterKey));
+    return ["All", ...Array.from(uniqueFilters).filter(Boolean).sort()];
   }, []);
 
-  const visible =
-    filter === "All"
-      ? allProjects
-      : allProjects.filter((p) => getFilterKey(p) === filter);
+  const visibleProjects = useMemo(() => {
+    if (filter === "All") return allProjects;
+    return allProjects.filter((project) => getFilterKey(project) === filter);
+  }, [filter]);
 
   const groupedProjects = useMemo(() => {
     const groups = {};
 
-    visible.forEach((p) => {
-      const key = getFilterKey(p);
+    visibleProjects.forEach((project) => {
+      const key = getFilterKey(project);
       if (!groups[key]) groups[key] = [];
-      groups[key].push(p);
+      groups[key].push(project);
     });
 
     return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
-  }, [visible]);
+  }, [visibleProjects]);
 
   return (
     <div className="page page-electric force-motion">
-      {/* ---------- Topbar ---------- */}
       <header className="topbar">
         <Container>
           <div className="topbar-row">
+            <button
+              className="hamburger"
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-label="Toggle navigation"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
             <a href="#home" className="brand brand-with-icon">
               <img src="/icon.png" alt="JT Logo" className="brand-icon" />
               <span>Jay Tranberg</span>
             </a>
 
-            <nav className="nav">
-              <a href="#featured">Work</a>
-              <a href="#stack">Stack</a>
-              <a href="#contact">Contact</a>
+            <nav className={`nav ${mobileMenuOpen ? "nav-open" : ""}`}>
+              <a href="#case-studies" onClick={() => setMobileMenuOpen(false)}>
+                Case Studies
+              </a>
+
+              <a href="#design" onClick={() => setMobileMenuOpen(false)}>
+                Design
+              </a>
+
+              <a href="#work" onClick={() => setMobileMenuOpen(false)}>
+                Projects
+              </a>
+
+              <a href="#stack" onClick={() => setMobileMenuOpen(false)}>
+                Stack
+              </a>
+
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)}>
+                Contact
+              </a>
             </nav>
 
             <div className="topbar-cta">
               <button
                 className="btn"
-                onClick={() => setDark((v) => !v)}
+                type="button"
+                onClick={() => setDark((value) => !value)}
                 aria-pressed={dark}
-                title={dark ? "Switch to light" : "Switch to dark"}
+                title={dark ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {dark ? "☀️" : "🌙"}
               </button>
@@ -147,43 +225,99 @@ export default function App() {
         </Container>
       </header>
 
-      {/* ---------- Hero ---------- */}
       <section id="home" className="hero hero-results">
         <div className="hero-bg" />
+
         <Container>
           <div className="hero-inner">
             <p className="kicker">
-              Team Lead · Full-Stack Engineer · IoT · AI · Web3
+              Software Engineer • Data Platforms • SaaS • AI-Assisted
+              Development
             </p>
 
             <h1 className="hero-title">
-              I lead, build and ship end-to-end software.
+              I build production software that helps people make better
+              decisions.
             </h1>
 
             <p className="hero-subtitle">
-              Team lead delivery across firmware, backends, ML, SaaS, mobile,
-              and Web3 — focused on reliability, UX, and outcomes.
+              I design, build, deploy, and support production software that
+              transforms complex business data into clear, reliable, and
+              human-centered applications. My work combines React, Node.js,
+              MongoDB, AI-assisted development, and visual telemetry to help
+              users understand what their systems are doing in real time.
             </p>
 
-            <div className="metrics-grid">
-              {headline.map((m, i) => (
-                <div
-                  key={m.label}
-                  className="reveal fade-up"
-                  style={{ transitionDelay: `${i * 90}ms` }}
-                >
-                  <MetricStat {...m} />
-                </div>
-              ))}
+            <div className="proof-grid">
+              <ProofCard
+                icon={Database}
+                value="137,000+"
+                label="Prospect Records"
+                caption="Global Hockey Intelligence Platform"
+              />
+
+              <ProofCard
+                icon={Globe2}
+                value="98"
+                label="Countries"
+                caption="Worldwide player coverage"
+              />
+
+              <ProofCard
+                icon={Rocket}
+                value="120+"
+                label="Days Live"
+                caption="Production uptime"
+              />
+
+              <ProofCard
+                icon={ServerCog}
+                value="6+"
+                label="Production Systems"
+                caption="Designed & Deployed"
+              />
+
+              <ProofCard
+                icon={BrainCircuit}
+                value="AI"
+                label="AI Assisted Engineering"
+                caption="Accelerated software delivery"
+              />
+
+              <ProofCard
+                icon={Activity}
+                value="UX"
+                label="Visual Telemetry"
+                caption="Software that communicates"
+              />
             </div>
 
+            <p className="hero-proof reveal fade-up">
+              Every project below includes the business problem, architecture,
+              engineering decisions, deployment strategy, and measurable
+              outcomes.
+            </p>
+
             <div className="hero-actions">
+              <a className="btn btn-primary" href="#case-studies">
+                View Case Studies
+              </a>
+
               <a className="btn" href={LINKS.resumePdf} download>
                 Download Resume
               </a>
-              <a className="btn" href={LINKS.appendixPdf} download>
-                Project Appendix
-              </a>
+
+              {LINKS.github ? (
+                <a
+                  className="btn"
+                  href={LINKS.github}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>
+              ) : null}
+
               <a
                 className="btn"
                 href={LINKS.linkedin}
@@ -197,11 +331,115 @@ export default function App() {
         </Container>
       </section>
 
-      {/* ---------- Work ---------- */}
       <Section
-        id="featured"
-        title="Work"
-        subtitle="Filter by focus area and open any project group for details."
+        id="case-studies"
+        title="Featured Engineering Projects"
+        subtitle="Production software built for real users, real businesses, and real operational challenges."
+      >
+        <div className="grid3 case-study-grid">
+          <article className="case-study-card reveal fade-up">
+            <p className="case-study-label">Production Syndication Platform</p>
+            <h3>Wall Financial Feed Console</h3>
+            <p>
+              Built and maintained a production apartment syndication platform
+              that normalizes property, floorplan, unit, pricing, availability,
+              and promotion data for Apartments.com delivery.
+            </p>
+            <ul>
+              <li>120+ days production uptime</li>
+              <li>Thousands of rental units processed</li>
+              <li>Automated feed validation and client-facing console</li>
+            </ul>
+
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={() => setOpenCaseStudy("syndicator")}
+            >
+              Read Case Study
+            </button>
+          </article>
+
+          <article className="case-study-card reveal fade-up">
+            <p className="case-study-label">Data Intelligence Platform</p>
+            <h3>The Prospector-A ScoutBoard</h3>
+            <p>
+              Built a hockey prospect intelligence platform using React, Node,
+              Express, MongoDB, API ingestion, scoring logic, search, filtering,
+              and analytics dashboards.
+            </p>
+            <ul>
+              <li>137,000+ player records</li>
+              <li>98 countries represented</li>
+              <li>Live data ingestion and normalized MongoDB storage</li>
+            </ul>
+
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={() => setOpenCaseStudy("prospector")}
+            >
+              Read Case Study
+            </button>
+          </article>
+
+          <article className="case-study-card reveal fade-up">
+            <p className="case-study-label">SaaS Operations Platform</p>
+            <h3>Fan7 Magic Portal</h3>
+            <p>
+              Built a repair-shop customer and operations portal integrating
+              authentication, customer claims, dashboards, technician metrics,
+              and Shopmonkey-connected workflows.
+            </p>
+            <ul>
+              <li>Role-based customer portal</li>
+              <li>Technician and customer dashboards</li>
+              <li>Chrome extension workflow integration</li>
+            </ul>
+
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={() => setOpenCaseStudy("fan7")}
+            >
+              Read Case Study
+            </button>
+          </article>
+        </div>
+      </Section>
+
+      <Section
+        id="design"
+        title="Designing Software That Communicates"
+        subtitle="I believe software should continuously explain itself to the people using it."
+      >
+        <div className="grid4 case-study-grid">
+          <CommunicationCard icon="📊" title="Visual Telemetry">
+            Dashboards, KPIs, health indicators, live status, and progress
+            signals that make system behavior visible instead of hidden.
+          </CommunicationCard>
+
+          <CommunicationCard icon="🟢" title="System Confidence">
+            Clear cues for sync status, API health, data validation, deployment
+            state, and successful user actions.
+          </CommunicationCard>
+
+          <CommunicationCard icon="⚠️" title="Human-Friendly Errors">
+            Plain-language errors, graceful failures, recovery suggestions, and
+            useful fallback states instead of silent crashes.
+          </CommunicationCard>
+
+          <CommunicationCard icon="❤️" title="Emotional UX">
+            Interfaces that reduce uncertainty, reward progress, guide users,
+            and make complex technical systems feel understandable.
+          </CommunicationCard>
+        </div>
+      </Section>
+
+      <Section
+        id="work"
+        title="Additional Project Work"
+        subtitle="Supporting projects across web apps, mobile apps, automation, AI tooling, and client systems."
       >
         <KPIFilter active={filter} onChange={setFilter} options={filters} />
 
@@ -221,13 +459,13 @@ export default function App() {
               </summary>
 
               <div className="grid2 drawer-grid">
-                {projects.map((p, i) => (
+                {projects.map((project, index) => (
                   <div
-                    key={p.id || p.title}
+                    key={project.id || project.title}
                     className="reveal fade-up"
-                    style={{ transitionDelay: `${i * 50}ms` }}
+                    style={{ transitionDelay: `${index * 50}ms` }}
                   >
-                    <ProjectCardV2 {...p} area={getAreaLabel(p)} />
+                    <ProjectCardV2 {...project} area={getAreaLabel(project)} />
                   </div>
                 ))}
               </div>
@@ -236,32 +474,29 @@ export default function App() {
         </div>
       </Section>
 
-      {/* ---------- Skills ---------- */}
       <Section
         id="stack"
-        title="Skills Matrix"
-        subtitle="A quick, honest snapshot of what I use to ship."
+        title="Technical Stack"
+        subtitle="Technologies I use to build reliable production software."
       >
         <div className="reveal fade-up">
           <SkillsMatrix groups={skillsGroups} />
         </div>
       </Section>
 
-      {/* ---------- Blog ---------- */}
       <Section
         id="blog"
-        title="Blog"
-        subtitle="Build logs, experiments, postmortems."
+        title="Engineering Notes"
+        subtitle="Build logs, architecture notes, debugging notes, and project postmortems."
       >
         <BlogIndex onOpen={setOpenPost} />
         <BlogPostModal post={openPost} onClose={() => setOpenPost(null)} />
       </Section>
 
-      {/* ---------- Contact ---------- */}
       <Section
         id="contact"
         title="Contact"
-        subtitle="Open to full-time roles and long-term contract engagements."
+        subtitle="Open to software engineering roles, SaaS platform work, data tooling, and long-term contract engagements."
       >
         <div className="panel">
           <p>
@@ -287,8 +522,14 @@ export default function App() {
           </p>
         </div>
       </Section>
-
-      {/* ---------- Chatbot ---------- */}
+      <CaseStudyModal
+        open={openCaseStudy}
+        onClose={() => setOpenCaseStudy(null)}
+      >
+        {openCaseStudy === "syndicator" && <SyndicatorCaseStudy />}
+        {openCaseStudy === "prospector" && <ProspectorCaseStudy />}
+        {openCaseStudy === "fan7" && <Fan7CaseStudy />}
+      </CaseStudyModal>
       <ChatbotOverlay />
     </div>
   );
