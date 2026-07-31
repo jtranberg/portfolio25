@@ -1,0 +1,54 @@
+# Jay Tranberg — Software Engineering Portfolio
+
+> Portfolio of Jay Tranberg, a platform engineer, product architect, and full-stack software developer based in Victoria, British Columbia, Canada.
+
+Jay Tranberg designs and builds production-oriented SaaS platforms, distributed IoT systems, AI applications, operational dashboards, API integrations, and real-time software.
+
+## Portfolio
+
+- [Software Engineering Portfolio](https://jaytranberg.com.com/)
+  Overview of selected software, SaaS, AI, IoT, mobile, and Web3 projects.
+
+## Featured Projects
+
+- [Project Falcon Telemetry Dashboard](https://project-falcon-iot.netlify.app/)
+  Distributed IoT drone telemetry platform using C++, MQTT, Node.js, gRPC, MongoDB, Socket.IO, Docker, and React.
+
+- [Project Falcon Drone Console](https://drone-console.netlify.app/)
+  Real-time aircraft command interface for mission control, altitude, heading, hover, return-to-home, and landing operations.
+
+- [United Sports Prospects](https://unitedsportsprospects.com/)
+  Athlete intelligence and scouting platform supporting prospect discovery, player research, recruiting analysis, and large-scale sports data.
+
+- [Fan7](https://fan7.netlify.app/)
+  AI-native customer experience and operational platform for automotive service businesses.
+
+- [Observation Lounge](https://the-observation-lounge.netlify.app/)
+  Operational intelligence platform for monitoring application health, incidents, response times, and production systems.
+
+- [Black T-Shirt Catalog API](https://catalog.blktshirt.ca/)
+  Large-scale product catalog API and branded commerce interface supporting more than 220,000 items.
+
+## Engineering Capabilities
+
+- Full-stack application architecture
+- SaaS and multi-tenant platforms
+- React, Next.js, Node.js, Express, and MongoDB
+- C++ and embedded systems
+- MQTT and distributed IoT architecture
+- gRPC and microservices
+- Socket.IO and real-time communication
+- REST APIs and third-party integrations
+- Dockerized development environments
+- AI integration and intelligent workflows
+- Authentication and role-based authorization
+- Monitoring and operational intelligence
+
+## About
+
+Jay Tranberg builds complete software products from architecture and backend services through user interfaces, infrastructure, deployment, and operational monitoring.
+
+## Contact
+
+- [LinkedIn](www.linkedin.com/in/jaytranberg)
+- [GitHub](https://github.com/jtranberg)
