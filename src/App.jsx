@@ -161,6 +161,8 @@ export default function App() {
     return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
   }, [visibleProjects]);
 
+  
+
   return (
     <div className="page page-electric force-motion">
       <header className="topbar">
