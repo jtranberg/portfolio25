@@ -189,6 +189,62 @@ const portfolioProjects = [
   },
 
   {
+  area: "IoT",
+  title: "Project Falcon",
+  image: "/falcon-dashboard.png",
+  summary:
+    "Distributed IoT telemetry and command platform featuring MQTT messaging, gRPC microservices, real-time dashboards, Dockerized infrastructure, and a C++ drone client.",
+
+  kpis: [
+    {
+      value: 6,
+      unit: "services",
+      sign: "plus",
+      label: "distributed architecture"
+    },
+    {
+      value: 500,
+      unit: "ms",
+      sign: "minus",
+      label: "telemetry interval"
+    }
+  ],
+
+  tags: [
+    "C++",
+    "React",
+    "Node.js",
+    "MQTT",
+    "gRPC",
+    "MongoDB",
+    "Docker",
+    "Socket.IO"
+  ],
+
+  links: [
+    {
+      href: "https://project-falcon-iot.netlify.app/",
+      label: "Telemetry Dashboard"
+    },
+    {
+      href: "https://drone-console.netlify.app/",
+      label: "Drone Console"
+    }
+  ],
+
+  details: {
+    problem:
+      "Demonstrate a complete production-style IoT platform capable of real-time telemetry, command routing, and distributed communication.",
+
+    action:
+      "Designed and built six interconnected applications including a C++ drone simulator, MQTT broker, Node.js gateway, gRPC alert service, MongoDB persistence, and two React front ends running in a Dockerized environment.",
+
+    result:
+      "Delivered a real-time distributed platform that visualizes aircraft telemetry, supports live command and control, and demonstrates modern microservice architecture for IoT systems."
+  }
+},
+
+  {
     area: "IoT",
     title: "Project Snowman",
     image: img("snowman.png"),
